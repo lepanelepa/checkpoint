@@ -1,9 +1,6 @@
 ﻿using CheckPoint.Interfaces;
 using CheckPoint.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 
 namespace CheckPoint.Services
@@ -59,17 +56,16 @@ namespace CheckPoint.Services
         public int UpdateCar(Car car)
         {
             throw new NotImplementedException();
-            //using (var context = new CheckPointDBContext())
-            //{
-            //    Car? existCar = context.Cars.Single(a => a.Id == car.Id);
-            //    if (existCar != null)
-            //    {
-            //        existCar.Brand = car.Brand;
-            //        existCar.Model = car.Model;
-            //        existCar.Number = car.Number;                    
-            //        return context.SaveChanges();
-            //    }
-            //}
+
+        }
+
+        public List<Car> GetCarsByEmployeeId(int employeeId)
+        {
+            using (var context = new CheckPointDBContext())
+            {
+                var list = context.Cars.Where(c =>c.EmployeeId==employeeId).ToList();
+                return list;
+            }
         }
     }
 }

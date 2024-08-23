@@ -7,13 +7,10 @@ namespace CheckPoint.Models
         public int Id { get; set; }
 
         [Required]
-        public string FistName { get; set; }
+        public string FirstName { get; set; }
 
         [Required]
         public string LastName { get; set; }    
-
-
-        public List<Car> Cars { get; set; }
 
     }
 }
