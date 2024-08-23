@@ -7,13 +7,13 @@ namespace CheckPoint.Services
 {
     public class CarService : ICarRepository
     {
-        public Car AddCar(Car car)
+        public Car? AddCar(Car car)
         {
             using (var context = new CheckPointDBContext())
             {
                 context.Cars.Add(car);
-                context.SaveChanges();
-                return car;
+                var result = context.SaveChanges();
+                return result >= 0 ? car : null;
             }
         }
 
@@ -26,13 +26,14 @@ namespace CheckPoint.Services
             }
         }
 
-        public int DeleteCar(int id)
+        public bool DeleteCar(int id)
         {
             using (var context = new CheckPointDBContext())
             {
                 context.Remove(context.Cars.Single(a => a.Id == id));
-                return  context.SaveChanges();          
-            }
+                var result = context.SaveChanges();
+                return result >= 0;
+            }        
         }
 
         public Car GetCarById(int id)
