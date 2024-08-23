@@ -55,8 +55,11 @@ namespace CheckPoint.Services
 
         public int UpdateCar(Car car)
         {
-            throw new NotImplementedException();
-
+            using (var context = new CheckPointDBContext())
+            {
+                context.Cars.Update(car);
+                return context.SaveChanges();                
+            }
         }
 
         public List<Car> GetCarsByEmployeeId(int employeeId)

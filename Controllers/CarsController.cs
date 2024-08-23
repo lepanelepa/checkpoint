@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CheckPoint.Models;
 using CheckPoint.ViewModels;
-using System.Xml;
 
 namespace CheckPoint.Controllers
 {
@@ -29,8 +28,8 @@ namespace CheckPoint.Controllers
             return Ok(cars);
         }
 
-        [HttpGet("{id}")]
-        private ActionResult<Car> GetCarById(int id)
+        [HttpGet("{id:int}")]
+        public ActionResult<Car> GetCarById([FromRoute ] int id)
         {
             var car =  _carRepository.GetCarById(id);
             if (car == null)
@@ -78,6 +77,12 @@ namespace CheckPoint.Controllers
             {
                 return BadRequest(string.Format("Автомобиль с идентификатором {0} не существует", car.Id));
             }
+            // Проверяем есть ли такой сотрудник
+            var employee = _employeeRepository.GetById(car.EmployeeId);
+            if (employee == null)
+            {
+                return BadRequest(string.Format("Сотрудника с идентификатором {0} не существует", car.EmployeeId));
+            }            
             var result = _carRepository.UpdateCar(car);
             return Ok(result);
         }
